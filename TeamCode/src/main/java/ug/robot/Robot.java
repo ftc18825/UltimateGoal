@@ -13,7 +13,7 @@ public class Robot extends Mechanism{
 
     public DriveTrain driveTrain;
     public Intake intake;
-    public Placer placer;
+    public Shooter shooter;
     public FoundationGrabber foundationGrabber;
     public Gyro gyro;
     public ParamManager paramManager;
@@ -33,7 +33,7 @@ public class Robot extends Mechanism{
 
         driveTrain = new DriveTrain("driveTrain", hardwareMap);
         intake = new Intake("intake", hardwareMap);
-        placer = new Placer("placer", hardwareMap);
+        shooter = new Shooter("placer", hardwareMap);
         foundationGrabber = new FoundationGrabber("foundationGrabber", hardwareMap);
         gyro = new Gyro("imu",hardwareMap);
         vision = new Vision("vision",hardwareMap);
@@ -43,7 +43,7 @@ public class Robot extends Mechanism{
         mechanisms = new ArrayList<>();
         mechanisms.add(driveTrain);
         mechanisms.add(intake);
-        mechanisms.add(placer);
+        mechanisms.add(shooter);
         mechanisms.add(foundationGrabber);
         mechanisms.add(gyro);
         mechanisms.add(vision);

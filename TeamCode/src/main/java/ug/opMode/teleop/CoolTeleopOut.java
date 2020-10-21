@@ -122,165 +122,61 @@ public class CoolTeleopOut extends OpMode {
     @Override
     public void loop() {
 
-        if (beginning){
-            rob.foundationGrabber.allUp();
-            if(isOut){
-                rob.placer.arm.armIsOut();
-                rob.placer.arm.shelbowOut();
-            }else{
-                rob.placer.arm.armIsIn();
-                rob.placer.arm.shelbowIn();
-            }
+        rob.driveTrain.holoGyro(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed*2/3,(int)rob.gyro.getHeading());
+        //rob.driveTrain.holoDrive(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed);
+
+        if (gamepad1.left_stick_button && !leftStick1Pressed) {
+            if (driveSpeed > 0.9)
+                driveSpeed = 0.5;
+            else if (driveSpeed < 0.6)
+                driveSpeed = 1.0;
+        }
+        leftStick1Pressed = gamepad1.left_stick_button;
+
+        if (gamepad1.right_trigger > 0.5) {
+            rob.intake.in();
+        } else if (gamepad1.right_bumper) {
+            rob.intake.out();
+        } else {
+            rob.intake.stopPower();
         }
 
-        if(gamepad1.left_trigger > 0.5|| gamepad2.left_trigger > 0.5){
-            if(runtime.milliseconds()-lastBackUpTime < 250){
-                rob.placer.arm.release();
-                rob.foundationGrabber.allOut();
-                rob.foundationGrabber.fangsUp();
-                rob.placer.lift.raise();
-            }else{
-                rob.placer.lift.hold();
-                rob.driveTrain.holoDrive(0,0.5,0);
-            }
+        if(gamepad1.y){
+            rob.foundationGrabber.fangsUp();
+            rob.foundationGrabber.fgUp();
+        }else if(gamepad1.a){
+            rob.foundationGrabber.fangsDown();
+        }else if(gamepad1.x){
+            rob.foundationGrabber.fangsNubs();
+            rob.foundationGrabber.fgDown();
+        }else if(gamepad1.b){
+            rob.foundationGrabber.fgDown();
+        }
+
+        if (gamepad1.dpad_up) {
+            rob.gyro.resetHeadingForward();
+        }
+        if (gamepad1.dpad_left) {
+            rob.gyro.resetHeadingLeft();
+        }
+        if(gamepad1.dpad_right) {
+            rob.gyro.resetHeadingRight();
+        }
+        if(gamepad1.dpad_down){
+            rob.gyro.resetHeadingBackward();
+        }
+
+        if(gamepad1.left_bumper || gamepad2.left_bumper){
+            rob.intake.pushOut();
         }else{
-            lastBackUpTime = runtime.milliseconds();
-
-
-            rob.driveTrain.holoGyro(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed*2/3,(int)rob.gyro.getHeading());
-            //rob.driveTrain.holoDrive(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed);
-
-            if (gamepad1.left_stick_button && !leftStick1Pressed) {
-                if (driveSpeed > 0.9)
-                    driveSpeed = 0.5;
-                else if (driveSpeed < 0.6)
-                    driveSpeed = 1.0;
-            }
-            leftStick1Pressed = gamepad1.left_stick_button;
-
-            if (gamepad1.right_trigger > 0.5) {
-                rob.intake.in();
-            } else if (gamepad1.right_bumper) {
-                rob.intake.out();
-            } else {
-                rob.intake.stopPower();
-            }
-
-            if(gamepad1.y){
-                rob.foundationGrabber.fangsUp();
-                rob.foundationGrabber.fgUp();
-            }else if(gamepad1.a){
-                rob.foundationGrabber.fangsDown();
-            }else if(gamepad1.x){
-                rob.foundationGrabber.fangsNubs();
-                rob.foundationGrabber.fgDown();
-            }else if(gamepad1.b){
-                rob.foundationGrabber.fgDown();
-            }
-
-            if (gamepad1.dpad_up) {
-                rob.gyro.resetHeadingForward();
-            }
-            if (gamepad1.dpad_left) {
-                rob.gyro.resetHeadingLeft();
-            }
-            if(gamepad1.dpad_right) {
-                rob.gyro.resetHeadingRight();
-            }
-            if(gamepad1.dpad_down){
-                rob.gyro.resetHeadingBackward();
-            }
-
-            if(gamepad1.left_bumper || gamepad2.left_bumper){
-                rob.intake.pushOut();
-            }else{
-                rob.intake.pushIn();
-            }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////Start of Autonomous Jenga Positions//////////////////////////////////
-            if(gamepad2.y){
-                if(!rob.placer.arm.isOut && runtime.milliseconds()-lastLiftTime < 200)
-                    rob.placer.arm.shelbowIn();
-                else
-                    rob.placer.jengaAuto(rob.placer.lift.lift.getCurrentPosition(),runtime.milliseconds());
-            }else{
-                lastLiftTime = runtime.milliseconds();
-            }
-
-            if(gamepad2.a){
-                rob.placer.resetAuto(rob.placer.lift.lift.getCurrentPosition());
-            }
-
-            if(gamepad2.dpad_up && !dpadUpPressed){
-                rob.placer.stoneLevel++;
-            }
-            dpadUpPressed = gamepad2.dpad_up;
-
-            if(gamepad2.dpad_down && !dpadDownPressed){
-                rob.placer.stoneLevel--;
-            }
-            dpadDownPressed = gamepad2.dpad_down;
-
-            if(gamepad2.dpad_left){
-                rob.placer.arm.shelbowIn();
-            }
-            if(gamepad2.dpad_right){
-                rob.placer.arm.shelbowGrab();
-            }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-            if(gamepad2.right_trigger > 0.5) {
-                rob.placer.arm.grab();
-            }else if (gamepad2.right_bumper){
-                rob.placer.arm.release();
-                if(rob.placer.arm.isOut){
-                    rob.placer.stoneLevel=rob.placer.getLevel()+1;
-                }
-            }
-
-            if (gamepad2.left_stick_y<-0.5) {
-                rob.placer.lift.raise();
-            } else if (gamepad2.left_stick_y>0.5) {
-                rob.placer.lift.lower();
-            } else {
-                rob.placer.lift.hold();
-            }
-
-            /*if(gamepad2.right_stick_x > 0.1 || gamepad2.right_stick_x < -0.1 || gamepad2.right_stick_y > 0.1 || gamepad2.right_stick_y < -0.1){
-                rob.placer.arm.nudgeArm(3*-gamepad2.right_stick_x,3*gamepad2.right_stick_y , rob.gyro.getHeading());
-            }*/
-
-            if(gamepad2.x){
-                if(runtime.milliseconds()-lastCapstoneTime < 500){
-                    rob.placer.arm.grab();
-                }else if(runtime.milliseconds()-lastCapstoneTime < 1000){
-                    rob.placer.arm.releaseHigh();
-                }else if(runtime.milliseconds()-lastCapstoneTime < 1500){
-                    rob.capstoneDumper.dump();
-                }else if(runtime.milliseconds()-lastCapstoneTime < 2000){
-                    rob.placer.arm.grab();
-                }else if(runtime.milliseconds()-lastCapstoneTime < 2500){
-                    rob.placer.arm.shelbowIn();
-                    rob.capstoneDumper.up();
-                }else if(runtime.milliseconds()-lastCapstoneTime < 3000){
-                    rob.placer.arm.release();
-                }else{
-                    rob.placer.arm.grab();
-                }
-            }else{
-                lastCapstoneTime = runtime.milliseconds();
-                rob.capstoneDumper.up();
-            }
-
-
+            rob.intake.pushIn();
         }
+
+
+
         // Show the elapsed game time and wheel power.
         telemetry.addData("Heading: ", rob.gyro.getHeading());
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Lift Position:", rob.placer.lift.lift.getCurrentPosition());
-        telemetry.addData("Stone Level: ",rob.placer.getLevel());
-        telemetry.addData("Target Stone Level: ",rob.placer.stoneLevel);
         //telemetry.addData("Drive Motors", rob.driveTrain.frontLeftFwd + " " + rob.driveTrain.backLeftFwd + " " + rob.driveTrain.frontRightFwd + " " + rob.driveTrain.backRightFwd);
         beginning = false;
     }

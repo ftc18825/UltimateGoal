@@ -9,8 +9,8 @@ import ug.util.Param;
 
 
 
-public class Lift extends Mechanism {
-    public DcMotor lift;
+public class Shooter extends Mechanism {
+    public DcMotor shooter;
     //boolean encMode = false;
     int upPosEnc;
     private ElapsedTime runtime = new ElapsedTime();
@@ -18,43 +18,60 @@ public class Lift extends Mechanism {
     int lastMotorPos;
     int zeroMotorPos;
     int topMotorPos;
-    int liftUpVal;
     public int currentTarget;
     double lastTimeNotStalled;
 
-    public Lift(String n, HardwareMap hardwareMap) {
+    public Shooter(String n, HardwareMap hardwareMap) {
         super(n, hardwareMap);
-        lift = getHwMotor("lift");
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shooter = getHwMotor("shooter");
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         hmp.put(mName("Speed"), new Param(1.0));
         hmp.get(mName("Speed")).setStandardServo();
-        hmp.put(mName("FullInVal"), new Param(0));
-        hmp.put(mName("DumpVal"), new Param(850));
-        hmp.put(mName("FullDownVal"), new Param(2250));
         isPowered = false;
-        hmp.get(mName("FullInVal")).setStandardEnc();
-        hmp.get(mName("DumpVal")).setStandardEnc();
-        hmp.get(mName("FullDownVal")).setStandardEnc();
 
-        liftUpVal = 2200;
         //Value is 600 for 3.7 Motor, 2200 for Neverest 20
     }
 
     public void init() {
         stop();
         runtime.reset();
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        zeroMotorPos = lift.getCurrentPosition();
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        zeroMotorPos = shooter.getCurrentPosition();
         lastMotorPos = zeroMotorPos;
-        lift.setPower(0);
-        lift.setTargetPosition(zeroMotorPos);
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shooter.setPower(0);
+        shooter.setTargetPosition(zeroMotorPos);
+        shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         lastTimeNotStalled = runtime.seconds();
         currentTarget = zeroMotorPos;
         topMotorPos = -3600;
     }
 
+    public void powerOn() {
+        isPowered = true;
+        //shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        shooter.setPower(getPVal("Speed")*1);
+    }
+
+    public void powerOff() {
+        isPowered = false;
+        //shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        stop();
+    }
+
+    public void stop() {
+        //if(!encMode) {
+        shooter.setPower(0);
+        //}
+        isPowered = false;
+    }
+
+    public void hold(){
+        isPowered = true;
+        shooter.setPower(getPVal("Speed")/2);
+    }
+
+    /*
     public boolean aboveRobot(int encVal){
         if(-encVal > liftUpVal){
             return true;
@@ -62,51 +79,11 @@ public class Lift extends Mechanism {
         return false;
     }
 
-    public void lower() {
-        isPowered = true;
-        //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.setPower(getPVal("Speed")*1);
-        //currentTarget -= 110;
-        currentTarget = lift.getCurrentPosition()+500;
-        if(currentTarget > zeroMotorPos+100){
-            currentTarget=zeroMotorPos+100;
-        }
-        lift.setTargetPosition(currentTarget);
-        //encMode = false;
-    }
-
-    public void raise() {
-        isPowered = true;
-        //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.setPower(getPVal("Speed")*1);
-        currentTarget = lift.getCurrentPosition()-500;
-        //currentTarget += 110;
-        if(currentTarget < topMotorPos){
-            currentTarget=topMotorPos;
-        }
-        lift.setTargetPosition(currentTarget);
-        //encMode = false;
-    }
-
-    public void hold(){
-        isPowered = true;
-        lift.setPower(getPVal("Speed")/2);
-        //currentTarget = lift.getCurrentPosition();
-        //lift.setTargetPosition(currentTarget);
-    }
-
     public void raiseFast() {
         isPowered = true;
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift.setPower(-getPVal("Speed")*0.8);
         //encMode = false;
-    }
-
-    public void stop() {
-        //if(!encMode) {
-        lift.setPower(0);
-        //}
-        isPowered = false;
     }
 
     public void fullIn(){
@@ -195,8 +172,8 @@ public class Lift extends Mechanism {
             om.stop();
         }
     }
-
+    */
     public void stopAndReset(){
-        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 }

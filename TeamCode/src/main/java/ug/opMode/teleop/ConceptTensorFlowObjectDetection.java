@@ -90,10 +90,10 @@ public class ConceptTensorFlowObjectDetection extends LinearOpMode {
         // first.
         initVuforia();
 
-        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
+        try {
             initTfod();
-        } else {
-            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
+        } catch (Exception e){
+            telemetry.addData("Could not init Tfod with exception: ", e);
         }
 
         /** Wait for the game to begin */

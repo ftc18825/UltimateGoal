@@ -217,7 +217,6 @@ public class Teleop extends OpMode {
         // Show the elapsed game time and wheel power.
         telemetry.addData("Heading: ", rob.gyro.getHeading());
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Lift Position:", rob.placer.lift.lift.getCurrentPosition());
 
         telemetry.addData("Drive Motors", rob.driveTrain.frontLeftFwd + " " + rob.driveTrain.backLeftFwd + " " + rob.driveTrain.frontRightFwd + " " + rob.driveTrain.backRightFwd);
     }

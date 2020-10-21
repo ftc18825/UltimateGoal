@@ -33,7 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import ug.robot.Lift;
+import ug.robot.Shooter;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -49,14 +49,15 @@ import ug.robot.Lift;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name = "TestLift")
+@TeleOp(name = "TestShooter")
 //@Disabled
-public class TestLift extends OpMode {
+public class TestShooter extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    Lift lift;
+    Shooter shooter;
     double driveSpeed;
     boolean rightStickPressed;
+    double shooterSpeed;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -65,11 +66,12 @@ public class TestLift extends OpMode {
     public void init() {
         //rob = new Robot(hardwareMap);
         // Tell the driver that initialization is complete.
-        lift =new Lift("lift", hardwareMap);
-        lift.init();
+        shooter =new Shooter("lift", hardwareMap);
+        shooter.init();
         telemetry.addData("Status", "Initialized");
         driveSpeed = 1;
         rightStickPressed = false;
+        shooterSpeed = .5;
     }
 
     /*
@@ -85,7 +87,7 @@ public class TestLift extends OpMode {
     @Override
     public void start() {
         runtime.reset();
-        lift.start();
+        shooter.start();
     }
 
     /*
@@ -96,17 +98,18 @@ public class TestLift extends OpMode {
 
 
         if(gamepad2.y){
-            lift.raise();
+            shooterSpeed += 0.05;
         }else if(gamepad2.a){
-            lift.lower();
-        }else{
-            lift.hold();
+            shooterSpeed += 0.05;
+        }else if(gamepad2.x){
+            shooter.stop();
+        }else if(gamepad2.b){
+            shooter.shooter.setPower(shooterSpeed);
         }
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Lift Position:", lift.lift.getCurrentPosition());
-        telemetry.addData("Lift Target:", lift.currentTarget);
+        telemetry.addData("Shooter Speed:", shooterSpeed);
     }
 
     /*
@@ -114,7 +117,7 @@ public class TestLift extends OpMode {
      */
     @Override
     public void stop() {
-        lift.stop();
+        shooter.stop();
     }
 
 }
