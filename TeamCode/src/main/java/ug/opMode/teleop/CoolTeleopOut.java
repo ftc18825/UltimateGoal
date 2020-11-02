@@ -142,15 +142,9 @@ public class CoolTeleopOut extends OpMode {
         }
 
         if(gamepad1.y){
-            rob.foundationGrabber.fangsUp();
-            rob.foundationGrabber.fgUp();
+            rob.wobbleGrabber.allUp();
         }else if(gamepad1.a){
-            rob.foundationGrabber.fangsDown();
-        }else if(gamepad1.x){
-            rob.foundationGrabber.fangsNubs();
-            rob.foundationGrabber.fgDown();
-        }else if(gamepad1.b){
-            rob.foundationGrabber.fgDown();
+            rob.wobbleGrabber.allDown();
         }
 
         if (gamepad1.dpad_up) {

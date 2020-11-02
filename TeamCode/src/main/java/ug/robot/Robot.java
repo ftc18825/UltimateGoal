@@ -14,7 +14,7 @@ public class Robot extends Mechanism{
     public DriveTrain driveTrain;
     public Intake intake;
     public Shooter shooter;
-    public FoundationGrabber foundationGrabber;
+    public WobbleGrabber wobbleGrabber;
     public Gyro gyro;
     public ParamManager paramManager;
     public Vision vision;
@@ -34,7 +34,7 @@ public class Robot extends Mechanism{
         driveTrain = new DriveTrain("driveTrain", hardwareMap);
         intake = new Intake("intake", hardwareMap);
         shooter = new Shooter("placer", hardwareMap);
-        foundationGrabber = new FoundationGrabber("foundationGrabber", hardwareMap);
+        wobbleGrabber = new WobbleGrabber("wobbleGrabber", hardwareMap);
         gyro = new Gyro("imu",hardwareMap);
         vision = new Vision("vision",hardwareMap);
         capstoneDumper = new CapstoneDumper("capstoneDumper",hardwareMap);
@@ -44,7 +44,7 @@ public class Robot extends Mechanism{
         mechanisms.add(driveTrain);
         mechanisms.add(intake);
         mechanisms.add(shooter);
-        mechanisms.add(foundationGrabber);
+        mechanisms.add(wobbleGrabber);
         mechanisms.add(gyro);
         mechanisms.add(vision);
         mechanisms.add(capstoneDumper);

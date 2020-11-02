@@ -112,7 +112,7 @@ public class IntakeAuton extends SkysAuton {
         }
         sleep(500);
         rob.driveTrain.stop();
-        rob.foundationGrabber.allDown();
+        rob.wobbleGrabber.allDown();
 
 
     }

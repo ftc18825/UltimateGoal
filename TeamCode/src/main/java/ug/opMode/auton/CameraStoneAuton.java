@@ -114,7 +114,7 @@ public class CameraStoneAuton extends SkysAuton {
 
     @Override
     public void runMe(){
-
+        /*
         //Moving to Stone
         rob.placer.arm.shelbowIn();
         rob.intake.pushOut();
@@ -199,14 +199,14 @@ public class CameraStoneAuton extends SkysAuton {
             rob.driveTrain.turnToDegrees(targetDegrees,rob.gyro,this,getPVal("TurnSpeed"));
         }
         rob.driveTrain.stop();
-
+        */
         /*while(runtime.milliseconds()<20000){
             telemetry.addData("Seeing Camera: ",rob.vision.getPosition(this));
             telemetry.update();
         }*/
 
         sleep(500);
-
+        /*
         if(false){//rob.vision.getPosition(this)){
             double xDistance = (blueQuarryX-rob.vision.posX) / 24.0;
             double yDistance;
@@ -216,7 +216,7 @@ public class CameraStoneAuton extends SkysAuton {
                 yDistance = (blueQuarryY - rob.vision.posY) / 24.0;
             }
             double angleDrive = (blueQuarryAngle-rob.vision.posAngle);
-
+        */
             /*targetDegrees = 0;
             if(isRed)
                 targetDegrees = 180;
@@ -224,7 +224,7 @@ public class CameraStoneAuton extends SkysAuton {
             while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
                 rob.driveTrain.turnToDegrees(targetDegrees,rob.gyro,this,getPVal("TurnSpeed"));
             }*/
-
+            /*
             if(!isRed){
                 xDistance*=-1;
                 yDistance*=-1;
@@ -278,7 +278,7 @@ public class CameraStoneAuton extends SkysAuton {
             rob.driveTrain.turnToDegrees(270,rob.gyro,this,getPVal("TurnSpeed"));
         }
         rob.driveTrain.stop();
-
+        */
         /*while(opModeIsActive()){
             telemetry.addData("Seeing Camera: ",rob.vision.getPosition(this));
             telemetry.addData("PosX: ",rob.vision.posX);
@@ -286,7 +286,7 @@ public class CameraStoneAuton extends SkysAuton {
             telemetry.update();
         }*/
 
-
+        /*
         sleep(500);
 
         if(rob.vision.getPosition(this)){
@@ -297,7 +297,7 @@ public class CameraStoneAuton extends SkysAuton {
             }else{
                 yDistance = (blueFoundationY - rob.vision.posY) / 24.0;
             }
-
+            */
             /*targetDegrees = 0;
             if(isRed)
                 targetDegrees = 180;
@@ -305,7 +305,7 @@ public class CameraStoneAuton extends SkysAuton {
             while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
                 rob.driveTrain.turnToDegrees(targetDegrees,rob.gyro,this,getPVal("TurnSpeed"));
             }*/
-
+            /*
             if(!isRed){
                 xDistance*=-1;
                 yDistance*=-1;
@@ -335,8 +335,8 @@ public class CameraStoneAuton extends SkysAuton {
             forwardTiles(getPVal("NoTargetY"),getPVal("SlowSpeed"));
         }
 
-        rob.foundationGrabber.fangsNubs();
-        rob.foundationGrabber.fgDown();
+        rob.wobbleGrabber.fangsNubs();
+        rob.wobbleGrabber.fgDown();
 
         rob.driveTrain.stop();
 
@@ -353,7 +353,7 @@ public class CameraStoneAuton extends SkysAuton {
             rightTiles(0.35, 0.2);
         }
 
-        rob.foundationGrabber.fangsDown();
+        rob.wobbleGrabber.fangsDown();
 
         backTiles(getPVal("BackAfterFoundation"),getPVal("FastSpeed"));
         if(isRed) {
@@ -385,8 +385,8 @@ public class CameraStoneAuton extends SkysAuton {
         }
         rob.placer.lift.hold();
         rob.placer.arm.release();
-        rob.foundationGrabber.fangsUp();
-        rob.foundationGrabber.allOut();
+        rob.wobbleGrabber.fangsUp();
+        rob.wobbleGrabber.allOut();
         rob.placer.lift.raise();
         sleep(100);
         rob.placer.lift.hold();
@@ -415,7 +415,7 @@ public class CameraStoneAuton extends SkysAuton {
 
 
         rob.stop();
-
+           */
         /*
 
         //Moving to Skybridge

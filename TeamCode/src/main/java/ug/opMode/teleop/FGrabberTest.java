@@ -106,7 +106,7 @@ public class FGrabberTest extends OpMode {
 
         if(gamepad1.x){
             if(!xPressed) {
-                rob.foundationGrabber.editing -= 1;
+                rob.wobbleGrabber.editing -= 1;
             }
             xPressed = true;
         }else{
@@ -115,7 +115,7 @@ public class FGrabberTest extends OpMode {
 
         if(gamepad1.b){
             if(!bPressed) {
-                rob.foundationGrabber.editing += 1;
+                rob.wobbleGrabber.editing += 1;
             }
             bPressed = true;
         }else {
@@ -123,11 +123,11 @@ public class FGrabberTest extends OpMode {
         }
 
         if(gamepad1.y){
-            rob.foundationGrabber.testUp();
+            rob.wobbleGrabber.testUp();
         }
 
         if(gamepad1.a){
-            rob.foundationGrabber.testDown();
+            rob.wobbleGrabber.testDown();
         }
 
 
@@ -135,12 +135,8 @@ public class FGrabberTest extends OpMode {
         telemetry.addData("Heading: ", rob.gyro.getHeading());
         telemetry.addData("Status", "Run Time: " + runtime.toString());
 
-        telemetry.addData("Editing: " , rob.foundationGrabber.getSelected());
-        telemetry.addData("LeftPos: " , rob.foundationGrabber.leftPos);
-        telemetry.addData("RightPos: " , rob.foundationGrabber.rightPos);
-        telemetry.addData("MiddlePos: " , rob.foundationGrabber.middlePos);
-        telemetry.addData("LeftFangPos",rob.foundationGrabber.leftFangPos);
-        telemetry.addData("RightFangPos",rob.foundationGrabber.rightFangPos);
+        telemetry.addData("Editing: " , rob.wobbleGrabber.getSelected());
+        telemetry.addData("WobblePos: " , rob.wobbleGrabber.wobblePos);
 
     }
 

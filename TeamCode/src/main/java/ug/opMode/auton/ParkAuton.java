@@ -51,7 +51,7 @@ public class ParkAuton extends SkysAuton {
 
     @Override
     public void runMe() {
-        rob.foundationGrabber.fangsDown();
+        rob.wobbleGrabber.allDown();
         rob.intake.pushOut();
         sleep(5000);
         rob.intake.pushIn();

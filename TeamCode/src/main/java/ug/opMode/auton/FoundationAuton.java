@@ -61,7 +61,7 @@ public class FoundationAuton extends SkysAuton {
         sleep(500);
         backTiles(0.5,0.15);
         //sleep(500);
-        rob.foundationGrabber.allDown();
+        rob.wobbleGrabber.allDown();
         sleep(2000);
         if(isRed){
             rob.driveTrain.turnDegrees(120,rob.gyro,this,0.3);
@@ -92,13 +92,13 @@ public class FoundationAuton extends SkysAuton {
             rob.driveTrain.holoDrive(0,0,-0.5);
         }
         sleep(100);
-        rob.foundationGrabber.allUp();
+        rob.wobbleGrabber.allUp();
         sleep(200);
         ////////Ramming the Foundation back into the wall
         rob.driveTrain.holoDrive(0,-0.5,0);
         sleep(1500);
         rob.driveTrain.stop();
-        rob.foundationGrabber.allUp();
+        rob.wobbleGrabber.allUp();
         ////////Moving away from the Foundation
         forwardTiles(0.2,0.5);
         sleep(250);
@@ -129,7 +129,7 @@ public class FoundationAuton extends SkysAuton {
         }else{
             rightTiles(0.25,0.25);
         }
-        rob.foundationGrabber.allDown();
+        rob.wobbleGrabber.allDown();
         rob.stop();
 
     }

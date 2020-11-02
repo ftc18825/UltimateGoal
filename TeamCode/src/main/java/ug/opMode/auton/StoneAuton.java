@@ -52,10 +52,11 @@ public class StoneAuton extends SkysAuton {
     boolean twoStone = false;
     @Override
     public void runMe(){
-        rob.foundationGrabber.stonePrepare();
+        /*
+        rob.wobbleGrabber.stonePrepare();
         backTiles(1.5,0.25);
         //backTiles(.5,0.25);
-        rob.foundationGrabber.middleToStone();
+        rob.wobbleGrabber.middleToStone();
         sleep(250);
         forwardTiles(0.5,0.5);
         sleep(250);
@@ -73,7 +74,7 @@ public class StoneAuton extends SkysAuton {
         }
         backTiles(2,0.5);
         sleep(250);
-        rob.foundationGrabber.middleUp();
+        rob.wobbleGrabber.middleUp();
         sleep(250);
         if(twoStone) {
             forwardTiles(2.86, 0.5);
@@ -86,7 +87,7 @@ public class StoneAuton extends SkysAuton {
             sleep(250);
             backTiles(.5, 0.5);
             sleep(250);
-            rob.foundationGrabber.middleToStone();
+            rob.wobbleGrabber.middleToStone();
             sleep(250);
             forwardTiles(.75, 0.5);
             sleep(250);
@@ -98,11 +99,12 @@ public class StoneAuton extends SkysAuton {
             sleep(250);
             backTiles(2.86, 0.75);
             sleep(250);
-            rob.foundationGrabber.middleUp();
+            rob.wobbleGrabber.middleUp();
             sleep(250);
         }
         forwardTiles(1,0.5);
         sleep(250);
-        rob.foundationGrabber.allDown();
+        rob.wobbleGrabber.allDown();
+         */
     }
 }
