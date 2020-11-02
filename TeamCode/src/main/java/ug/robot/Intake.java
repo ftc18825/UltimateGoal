@@ -7,32 +7,16 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Intake extends Mechanism {
 
 
-    DcMotor leftIntake;
-    DcMotor rightIntake;
-    public Servo leftPusher;
-    public Servo rightPusher;
-
-    double leftIn;
-    double leftOut;
-    double rightIn;
-    double rightOut;
+    DcMotor intake;
 
     public Intake(String n,HardwareMap hardwareMap){
         super(n, hardwareMap);
-        leftIntake = getHwMotor("leftIntake");
-        rightIntake = getHwMotor("rightIntake");
-        leftPusher = getHwServo("leftPusher");
-        rightPusher = getHwServo("rightPusher");
+        intake = getHwMotor("intake");
     }
 
 
     public void init(){
-        leftIn = 0.84;
-        leftOut = .394;
-        rightIn = 0;
-        rightOut = 0.75;
 
-        pushIn();
     }
 
     public void start(){
@@ -40,30 +24,17 @@ public class Intake extends Mechanism {
     }
 
     public void stop(){
-
-    }
-
-    public void pushOut(){
-        leftPusher.setPosition(leftOut);
-        rightPusher.setPosition(rightOut);
-    }
-
-    public void pushIn(){
-        leftPusher.setPosition(leftIn);
-        rightPusher.setPosition(rightIn);
+        stopPower();
     }
 
     public void in(){
-        leftIntake.setPower(-1);
-        rightIntake.setPower(1);
+        intake.setPower(-1);
     }
     public void out(){
-        leftIntake.setPower(0.5);
-        rightIntake.setPower(-0.5);
+        intake.setPower(0.5);
     }
     public void stopPower(){
-        rightIntake.setPower(0);
-        leftIntake.setPower(0);
+        intake.setPower(0);
 
     }
 }

@@ -160,11 +160,6 @@ public class CoolTeleopOut extends OpMode {
             rob.gyro.resetHeadingBackward();
         }
 
-        if(gamepad1.left_bumper || gamepad2.left_bumper){
-            rob.intake.pushOut();
-        }else{
-            rob.intake.pushIn();
-        }
 
 
 

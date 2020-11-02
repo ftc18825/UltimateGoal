@@ -18,7 +18,6 @@ public class Robot extends Mechanism{
     public Gyro gyro;
     public ParamManager paramManager;
     public Vision vision;
-    public CapstoneDumper capstoneDumper;
 
     public String paramFileName;
 
@@ -37,7 +36,6 @@ public class Robot extends Mechanism{
         wobbleGrabber = new WobbleGrabber("wobbleGrabber", hardwareMap);
         gyro = new Gyro("imu",hardwareMap);
         vision = new Vision("vision",hardwareMap);
-        capstoneDumper = new CapstoneDumper("capstoneDumper",hardwareMap);
         paramManager = new ParamManager();
 
         mechanisms = new ArrayList<>();
@@ -47,7 +45,6 @@ public class Robot extends Mechanism{
         mechanisms.add(wobbleGrabber);
         mechanisms.add(gyro);
         mechanisms.add(vision);
-        mechanisms.add(capstoneDumper);
 
         paramFileName = mName("Params");
     }

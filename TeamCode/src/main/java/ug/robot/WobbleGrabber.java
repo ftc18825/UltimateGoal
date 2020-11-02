@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class WobbleGrabber extends Mechanism{
 
-    Servo wobbleGrabber;
+    public Servo wobbleGrabber;
 
     double wobbleUp;
     double wobbleDown;
