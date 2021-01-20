@@ -104,9 +104,38 @@ public class Teleop extends OpMode {
     @Override
     public void loop() {
 
-        //rob.driveTrain.holoGyro(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed,(int)rob.gyro.getHeading());
+        rob.driveTrain.holoGyro(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed,(int)rob.gyro.getHeading());
         //rob.driveTrain.holoDrive(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed);
 
+        if (gamepad1.left_stick_button && !rightStickPressed) {
+            if (driveSpeed > 0.9)
+                driveSpeed = 0.5;
+            if (driveSpeed < 0.6)
+                driveSpeed = 1.0;
+        }
+        rightStickPressed = gamepad1.right_stick_button;
+
+        if (gamepad1.right_trigger > 0.5) {
+            rob.intake.in();
+        } else if (gamepad1.right_bumper) {
+            rob.intake.out();
+        } else {
+            rob.intake.stopPower();
+        }
+
+        if(gamepad1.left_bumper){
+            rob.shooter.powerOn();
+        }else{
+            rob.shooter.powerOff();
+        }
+
+        if(gamepad1.left_trigger > 0.3){
+            rob.shooter.shoot();
+        }else{
+            rob.shooter.retract();
+        }
+
+        /*
         if(Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 0.2){
             rob.driveTrain.turnToDegrees(Math.atan2(-gamepad1.left_stick_y,gamepad1.left_stick_x)*180/Math.PI,rob.gyro,this,0.6);
         }else{
@@ -116,6 +145,7 @@ public class Teleop extends OpMode {
         telemetry.addData("Gamepad data: ", gamepad1.left_stick_x-gamepad1.left_stick_y);
         telemetry.addData("Degrees to turn to: " , Math.atan2(-gamepad1.left_stick_y,gamepad1.left_stick_x)*180/Math.PI);
         telemetry.update();
+        */
         /*if (gamepad1.left_stick_button && !rightStickPressed) {
             if (driveSpeed > 0.9)
                 driveSpeed = 0.5;
@@ -175,7 +205,7 @@ public class Teleop extends OpMode {
         } else {
             rob.placer.lift.hold();
         }*/
-/*
+
         if(gamepad1.y){
             if(!yPressed) {
                 rob.driveTrain.changeFrontRight();
@@ -211,7 +241,7 @@ public class Teleop extends OpMode {
         }else{
             xPressed = false;
         }
-*/
+
 
 
         // Show the elapsed game time and wheel power.
@@ -219,6 +249,7 @@ public class Teleop extends OpMode {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
 
         telemetry.addData("Drive Motors", rob.driveTrain.frontLeftFwd + " " + rob.driveTrain.backLeftFwd + " " + rob.driveTrain.frontRightFwd + " " + rob.driveTrain.backRightFwd);
+        telemetry.update();
     }
 
     /*

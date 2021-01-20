@@ -3,6 +3,7 @@ package ug.robot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import ug.util.Param;
@@ -11,6 +12,7 @@ import ug.util.Param;
 
 public class Shooter extends Mechanism {
     public DcMotor shooter;
+    public Servo pusher;
     //boolean encMode = false;
     int upPosEnc;
     private ElapsedTime runtime = new ElapsedTime();
@@ -18,6 +20,10 @@ public class Shooter extends Mechanism {
     int lastMotorPos;
     int zeroMotorPos;
     int topMotorPos;
+
+    double pushIn;
+    double pushOut;
+
     public int currentTarget;
     double lastTimeNotStalled;
 
@@ -26,6 +32,7 @@ public class Shooter extends Mechanism {
         shooter = getHwMotor("shooter");
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        pusher = getHwServo("pusher");
         hmp.put(mName("Speed"), new Param(1.0));
         hmp.get(mName("Speed")).setStandardServo();
         isPowered = false;
@@ -45,6 +52,18 @@ public class Shooter extends Mechanism {
         lastTimeNotStalled = runtime.seconds();
         currentTarget = zeroMotorPos;
         topMotorPos = -3600;
+        pushIn = 180;
+        pushOut = 255;
+
+        retract();
+    }
+
+    public void shoot(){
+        pusher.setPosition(pushIn);
+    }
+
+    public void retract(){
+        pusher.setPosition(pushOut);
     }
 
     public void powerOn() {
