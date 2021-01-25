@@ -34,7 +34,7 @@ public class Robot extends Mechanism{
 
         driveTrain = new DriveTrain("driveTrain", hardwareMap);
         intake = new Intake("intake", hardwareMap);
-        shooter = new Shooter("placer", hardwareMap);
+        shooter = new Shooter("shooter", hardwareMap);
         wobbleGrabber = new WobbleGrabber("wobbleGrabber", hardwareMap);
         gyro = new Gyro("imu",hardwareMap);
         vision = new Vision("vision",hardwareMap);

@@ -131,8 +131,10 @@ public class Teleop extends OpMode {
 
         if(gamepad1.left_trigger > 0.3){
             rob.shooter.shoot();
+            telemetry.addData("Shoot","");
         }else{
             rob.shooter.retract();
+            telemetry.addData("Retract","");
         }
 
         /*

@@ -30,8 +30,8 @@ public class Shooter extends Mechanism {
     public Shooter(String n, HardwareMap hardwareMap) {
         super(n, hardwareMap);
         shooter = getHwMotor("shooter");
-        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         pusher = getHwServo("pusher");
         hmp.put(mName("Speed"), new Param(1.0));
         hmp.get(mName("Speed")).setStandardServo();
@@ -44,14 +44,14 @@ public class Shooter extends Mechanism {
         stop();
         runtime.reset();
         shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        zeroMotorPos = shooter.getCurrentPosition();
-        lastMotorPos = zeroMotorPos;
+        //zeroMotorPos = shooter.getCurrentPosition();
+        //lastMotorPos = zeroMotorPos;
         shooter.setPower(0);
-        shooter.setTargetPosition(zeroMotorPos);
-        shooter.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //shooter.setTargetPosition(0);
+        shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lastTimeNotStalled = runtime.seconds();
-        currentTarget = zeroMotorPos;
-        topMotorPos = -3600;
+        //currentTarget = zeroMotorPos;
+        //topMotorPos = -3600;
         pushIn = 180;
         pushOut = 255;
 
@@ -76,6 +76,10 @@ public class Shooter extends Mechanism {
         isPowered = false;
         //shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         stop();
+    }
+
+    public void start(){
+
     }
 
     public void stop() {

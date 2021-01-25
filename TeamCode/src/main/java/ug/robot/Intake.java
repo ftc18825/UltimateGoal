@@ -28,10 +28,10 @@ public class Intake extends Mechanism {
     }
 
     public void in(){
-        intake.setPower(-1);
+        intake.setPower(1);
     }
     public void out(){
-        intake.setPower(0.5);
+        intake.setPower(-1);
     }
     public void stopPower(){
         intake.setPower(0);
