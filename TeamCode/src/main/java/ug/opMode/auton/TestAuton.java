@@ -48,7 +48,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="TestAuton", group="Test")
 @Disabled
-public class TestAuton extends SkysAuton {
+public class TestAuton extends UGAuton {
 
     @Override
     public void runMe() {

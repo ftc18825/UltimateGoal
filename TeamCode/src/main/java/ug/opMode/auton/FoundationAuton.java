@@ -48,7 +48,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="FoundationAuton", group="Foundation")
 @Disabled
-public class FoundationAuton extends SkysAuton {
+public class FoundationAuton extends UGAuton {
     @Override
     public void runMe() {
         backTiles(1,0.5);

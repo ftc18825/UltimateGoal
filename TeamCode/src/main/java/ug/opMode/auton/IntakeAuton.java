@@ -48,7 +48,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="IntakeAuton", group="Stone")
 @Disabled
-public class IntakeAuton extends SkysAuton {
+public class IntakeAuton extends UGAuton {
     @Override
     public void runMe() {
         rob.driveTrain.holoDrive(0,0.5,0);

@@ -87,7 +87,7 @@ public class ServoTest extends OpMode {
         bPressed = false;
         xPressed = false;
         
-        editing = new String [] {"wobbleGrabber"};
+        editing = new String [] {"wobbleGrabber" , "pusher"};
         value = 0;
         editVal = 0;
         updateVal = 0.002;
@@ -136,6 +136,8 @@ public class ServoTest extends OpMode {
 
         if(editVal % editing.length == 0){
             rob.wobbleGrabber.wobbleGrabber.setPosition(value);
+        }else if(editVal % editing.length == 1){
+            rob.shooter.pusher.setPosition(value);
         }
 
 
@@ -145,6 +147,7 @@ public class ServoTest extends OpMode {
 
         telemetry.addData("Editing: " , editing[editVal%editing.length]);
         telemetry.addData("WobbleGrabberPos: " , rob.wobbleGrabber.wobbleGrabber.getPosition());
+        telemetry.addData("PusherPos: " , rob.shooter.pusher.getPosition());
 
     }
 

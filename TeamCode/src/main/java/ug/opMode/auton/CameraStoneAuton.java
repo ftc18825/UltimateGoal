@@ -50,7 +50,7 @@ import ug.util.Param;
 
 @Autonomous(name="CameraStoneAuton", group="Camera")
 @Disabled
-public class CameraStoneAuton extends SkysAuton {
+public class CameraStoneAuton extends UGAuton {
     boolean twoStone = false;
     double startTime = 0;
 

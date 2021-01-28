@@ -50,7 +50,7 @@ import ug.util.ParamManager;
 
 @Autonomous(name = "Skys", group = "Autonomous")
 @Disabled
-public class SkysAuton extends BasicAuton {
+public class UGAuton extends BasicAuton {
 
     // Declare OpMode members.
     //private ElapsedTime runtime = new ElapsedTime();
@@ -60,11 +60,11 @@ public class SkysAuton extends BasicAuton {
     ParamManager paramManager;
     public String paramFileName;
 
-    public SkysAuton() {
+    public UGAuton() {
         super();
         startingAtCrater = true;
         degrees = 0;
-        paramFileName = "RovrAutonParams";
+        paramFileName = "UGAutonParams";
 
         /*hmp.put("RAClaimSteps", new Param(11));
         setParamUpdateStep("RAClaimSteps", 1);

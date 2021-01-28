@@ -48,7 +48,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="StoneAuton", group="Stone")
 @Disabled
-public class StoneAuton extends SkysAuton {
+public class StoneAuton extends UGAuton {
     boolean twoStone = false;
     @Override
     public void runMe(){

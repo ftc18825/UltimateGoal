@@ -52,8 +52,8 @@ public class Shooter extends Mechanism {
         lastTimeNotStalled = runtime.seconds();
         //currentTarget = zeroMotorPos;
         //topMotorPos = -3600;
-        pushIn = 180;
-        pushOut = 255;
+        pushIn = .6;
+        pushOut = .95;
 
         retract();
     }

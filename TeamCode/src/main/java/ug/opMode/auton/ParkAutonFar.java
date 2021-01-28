@@ -46,7 +46,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name="ParkAutonFar", group="Stone")
 //@Disabled
-public class ParkAutonFar extends SkysAuton {
+public class ParkAutonFar extends UGAuton {
 
     @Override
     public void runMe() {

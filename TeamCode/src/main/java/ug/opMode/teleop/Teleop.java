@@ -107,7 +107,7 @@ public class Teleop extends OpMode {
         rob.driveTrain.holoGyro(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed,(int)rob.gyro.getHeading());
         //rob.driveTrain.holoDrive(gamepad1.left_stick_x * driveSpeed, -gamepad1.left_stick_y * driveSpeed, gamepad1.right_stick_x * driveSpeed);
 
-        if (gamepad1.left_stick_button && !rightStickPressed) {
+        if (gamepad1.right_stick_button && !rightStickPressed) {
             if (driveSpeed > 0.9)
                 driveSpeed = 0.5;
             if (driveSpeed < 0.6)
@@ -137,6 +137,19 @@ public class Teleop extends OpMode {
             telemetry.addData("Retract","");
         }
 
+        if (gamepad1.dpad_up) {
+            rob.gyro.resetHeadingForward();
+        }
+        if (gamepad1.dpad_left) {
+            rob.gyro.resetHeadingLeft();
+        }
+        if(gamepad1.dpad_right) {
+            rob.gyro.resetHeadingRight();
+        }
+        if(gamepad1.dpad_down){
+            rob.gyro.resetHeadingBackward();
+        }
+
         /*
         if(Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 0.2){
             rob.driveTrain.turnToDegrees(Math.atan2(-gamepad1.left_stick_y,gamepad1.left_stick_x)*180/Math.PI,rob.gyro,this,0.6);
@@ -156,41 +169,7 @@ public class Teleop extends OpMode {
         }
         rightStickPressed = gamepad1.right_stick_button;
 
-        if (gamepad1.right_trigger > 0.5) {
-            rob.intake.in();
-        } else if (gamepad1.right_bumper) {
-            rob.intake.out();
-        } else {
-            rob.intake.stopPower();
-        }
 
-        if (rob.placer.lift.lift.getCurrentPosition() > 600) {
-
-            if(gamepad2.dpad_up){
-                rob.placer.arm.moveJengaFar();
-            }
-
-            if(gamepad2.dpad_down){
-                rob.placer.arm.moveJengaNear();
-            }
-
-            if(gamepad2.dpad_left){
-                rob.placer.arm.moveJengaLeft();
-            }
-
-            if(gamepad2.dpad_right){
-                rob.placer.arm.moveJengaRight();
-            }
-
-            if(gamepad1.y){
-                rob.placer.arm.reset();
-            }
-
-            if(gamepad1.a){
-                rob.placer.arm.resetToCapstone();
-            }
-
-        }
 
         if(gamepad2.left_trigger > 0.5) {
             rob.placer.arm.grab();
