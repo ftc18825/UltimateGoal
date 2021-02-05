@@ -51,7 +51,7 @@ public class ParkAuton extends UGAuton {
 
     @Override
     public void runMe() {
-        rob.wobbleGrabber.allDown();
+        forwardTiles(getPVal("TilesToPark"),0.25);
         rob.stop();
 
 

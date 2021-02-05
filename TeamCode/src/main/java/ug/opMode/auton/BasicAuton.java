@@ -30,7 +30,6 @@
 package ug.opMode.auton;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -55,7 +54,7 @@ import ug.util.ParamManager;
  */
 
 @Autonomous(name="Basic", group="Autonomous")
-@Disabled
+//@Disabled
 public class BasicAuton extends LinearOpMode {
 
     // Declare OpMode members.
@@ -68,6 +67,7 @@ public class BasicAuton extends LinearOpMode {
 
     boolean isRed;
     int color;
+    boolean isWobble;
 
     public BasicAuton(){
         super();
@@ -103,16 +103,16 @@ public class BasicAuton extends LinearOpMode {
                 editing = true;
             }
 
-            color = rob.vision.skysLocation(this,isRed);
+            color = rob.vision.ringLocation(this,isRed);
             telemetry.addData("ColorCode = ",color);
             loopCount++;
             telemetry.addData("Loop # ",loopCount);
 
-            if(rob.vision.getPosition(this)){
-                telemetry.addData("X,Y,Angle: ", rob.vision.posX + " " + rob.vision.posY + " " + rob.vision.posAngle);
-            }else{
-                telemetry.addData("No target seen", "");
-            }
+            //if(rob.vision.getPosition(this)){
+            //    telemetry.addData("X,Y,Angle: ", rob.vision.posX + " " + rob.vision.posY + " " + rob.vision.posAngle);
+            //}else{
+            //    telemetry.addData("No target seen", "");
+            //}
 
             telemetry.addData("Status", "Initialized");
             telemetry.addData("firstSize ", firstSize);

@@ -3,6 +3,7 @@ package ug.opMode.auton;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
+import ug.util.Param;
 import ug.util.ParamManager;
 
 /* Copyright (c) 2017 FIRST. All rights reserved.
@@ -66,24 +67,22 @@ public class UGAuton extends BasicAuton {
         degrees = 0;
         paramFileName = "UGAutonParams";
 
-        /*hmp.put("RAClaimSteps", new Param(11));
-        setParamUpdateStep("RAClaimSteps", 1);
-        hmp.put("RAC-StrafeTiles1", new Param(-2.3));
-        setParamUpdateStep("RAC-StrafeTiles1", 0.1);
-        hmp.put("RAC-StrafeTiles2", new Param(-0.7));
-        setParamUpdateStep("RAC-StrafeTiles2", 0.1);
-        hmp.put("RAC-StrafeTiles3", new Param(0.2));
-        setParamUpdateStep("RAC-StrafeTiles3", 0.05);
-        hmp.put("RAC-MoveTiles1", new Param(-1.8));
-        setParamUpdateStep("RAC-MoveTiles1", 0.1);
-        hmp.put("RAC-TurnToDump1", new Param(15));
-        setParamUpdateStep("RAC-TurnToDump1", 0.05);
-        hmp.put("RAP-TilesToPark", new Param(3));
-        setParamUpdateStep("RAP-TilesToPark", 0.1);
-        hmp.put("RAC-Move1", new Param(0.5));
-        setParamUpdateStep("RAC-Move1", 0.1);
-        hmp.put("RA-Speed", new Param(0.5));
-        setParamUpdateStep("RA-Speed", 0.05);*/
+        hmp.put("TilesToPark" , new Param(3));
+        setParamUpdateStep("TilesToPark" , 0.1);
+        hmp.put("TilesToShoot" , new Param(1.5));
+        setParamUpdateStep("TilesToShoot" , 0.1);
+        hmp.put("TilesToA" , new Param(1));
+        setParamUpdateStep("TilesToA" , 0.1);
+        hmp.put("TilesToB" , new Param(2));
+        setParamUpdateStep("TilesToB" , 0.1);
+        hmp.put("TilesToC" , new Param(3));
+        setParamUpdateStep("TilesToC" , 0.1);
+        hmp.put("DegreesToWobble" , new Param(90));
+        setParamUpdateStep("DegreesToWobble" , 2.5);
+        hmp.put("TilesToWallRed" , new Param(1));
+        setParamUpdateStep("TilesToWallRed" , 0.05);
+        hmp.put("TilesToWallBlue" , new Param(1));
+        setParamUpdateStep("TilesToWallBlue" , 0.05);
 
     }
 

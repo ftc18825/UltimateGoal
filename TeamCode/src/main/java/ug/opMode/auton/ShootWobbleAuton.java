@@ -46,74 +46,60 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="IntakeAuton", group="Stone")
+@Autonomous(name="StoneAuton", group="Stone")
 @Disabled
-public class IntakeAuton extends UGAuton {
+public class ShootWobbleAuton extends ShootAuton {
     @Override
-    public void runMe() {
-        rob.driveTrain.holoDrive(0,0.5,0);
-        sleep(250);
-        rob.driveTrain.stop();
-        sleep(150);
-        rob.driveTrain.holoDrive(0,-0.5,0);
-        sleep(500);
-        rob.driveTrain.stop();
-        sleep(333);
-        rob.intake.in();
-        forwardTiles(2.5,0.5);
-        rob.intake.stopPower();
-        sleep(500);
-        backTiles(1.5,0.5);
-        sleep(500);
-        if(isRed) {
-            rob.driveTrain.turnDegrees(90,rob.gyro,this,0.15);  // negative is left
-        }else{
-            rob.driveTrain.turnDegrees(-90,rob.gyro,this,0.15);
-        }
-        sleep(333);
-        forwardTiles(2,0.5);
-        //sleep(333);
-        rob.intake.out();
-        sleep(100);
-        backTiles(.2,0.5);
-        sleep(333);
-        backTiles(2.66,0.5);
-        rob.intake.stopPower();
-        sleep(333);
-        if(isRed) {
-            rob.driveTrain.turnDegrees(-80,rob.gyro,this,0.15);  // negative is left
-        }else{
-            rob.driveTrain.turnDegrees(80,rob.gyro,this,0.15);
-        }
-        sleep(333);
-        rob.intake.in();
-        forwardTiles(1.5,0.5);
-        sleep(333);
-        rob.intake.stopPower();
-        backTiles(1.5,0.5);
-        sleep(333);
-        if(isRed) {
-            rob.driveTrain.turnDegrees(80,rob.gyro,this,0.15);  // negative is left
-        }else{
-            rob.driveTrain.turnDegrees(-80,rob.gyro,this,0.15);
-        }
-        forwardTiles(3.06,0.5);
-        rob.intake.out();
-        sleep(100);
-        backTiles(.2,0.5);
-        sleep(333);
-        backTiles(.5,0.5);
-        rob.intake.stopPower();
-        sleep(333);
-        if(isRed){
-            rob.driveTrain.holoDrive(-0.5, 0, 0);
-        }else {
-            rob.driveTrain.holoDrive(0.5, 0, 0);
-        }
-        sleep(500);
-        rob.driveTrain.stop();
-        rob.wobbleGrabber.allDown();
+    public void runMe(){
+        isWobble = true;
+        super.runMe();
 
+        if(color == 0){
+            forwardTiles(getPVal("TilesToA") , .25);
+        }else if(color == 1){
+            forwardTiles(getPVal("TilesToB") , .25);
+        }else{
+            forwardTiles(getPVal("TilesToC") , .25);
+        }
+
+        sleep(250);
+
+        double startTime = runtime.milliseconds();
+        while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
+            rob.driveTrain.turnToDegrees(getPVal("DegreesToWobble"),rob.gyro,this,0.25);
+        }
+        sleep(250);
+
+        if(color == 0 || color == 2){
+            if(isRed){
+                forwardTiles(getPVal("TilesToWallRed") , 0.25);
+                sleep(250);
+                //Drop Wobble
+                sleep(250);
+                backTiles(getPVal("TilesToWallRed") , 0.25);
+            }else{
+                backTiles(getPVal("TilesToWallBlue") , 0.25);
+                sleep(250);
+                //Drop Wobble
+                sleep(250);
+                forwardTiles(getPVal("TilesToWallBlue") , 0.25);
+            }
+        }
+        sleep(250);
+
+        startTime = runtime.milliseconds();
+        while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
+            rob.driveTrain.turnToDegrees(0,rob.gyro,this,0.25);
+        }
+        sleep(250);
+
+        if(color == 0){
+            backTiles(getPVal("TilesToA") + getPVal("TilestoShoot") - getPVal("TilesToPark") , 0.25);
+        }else if(color == 1){
+            backTiles(getPVal("TilesToB") + getPVal("TilestoShoot") - getPVal("TilesToPark") , 0.25);
+        }else{
+            backTiles(getPVal("TilesToC") + getPVal("TilestoShoot") - getPVal("TilesToPark") , 0.25);
+        }
 
     }
 }

@@ -119,7 +119,7 @@ public class Vision extends Mechanism {
     private float phoneYRotate    = 0;
     private float phoneZRotate    = 0;
 
-    VuforiaTrackables targetsSkyStone = null;
+    //VuforiaTrackables targetsSkyStone = null;
     List<VuforiaTrackable> allTrackables = null;
 
     public float posX , posY , posAngle;
@@ -160,7 +160,7 @@ public class Vision extends Mechanism {
         }*/
 
         if(using){
-            targetsSkyStone.deactivate();
+            //targetsSkyStone.deactivate();
         }
     }
 
@@ -253,7 +253,7 @@ public class Vision extends Mechanism {
         Vuforia.setFrameFormat(PIXEL_FORMAT.RGB565, true);
         vuforia.setFrameQueueCapacity(4);
 
-        targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
+        /*targetsSkyStone = this.vuforia.loadTrackablesFromAsset("Skystone");
 
         VuforiaTrackable stoneTarget = targetsSkyStone.get(0);
         stoneTarget.setName("Stone Target");
@@ -280,11 +280,11 @@ public class Vision extends Mechanism {
         VuforiaTrackable rear1 = targetsSkyStone.get(11);
         rear1.setName("Rear Perimeter 1");
         VuforiaTrackable rear2 = targetsSkyStone.get(12);
-        rear2.setName("Rear Perimeter 2");
+        rear2.setName("Rear Perimeter 2");*/
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
         allTrackables = new ArrayList<VuforiaTrackable>();
-        allTrackables.addAll(targetsSkyStone);
+        //allTrackables.addAll(targetsSkyStone);
 
         /**
          * In order for localization to work, we need to tell the system where each target is on the field, and
@@ -307,6 +307,8 @@ public class Vision extends Mechanism {
         // Set the position of the Stone Target.  Since it's not fixed in position, assume it's at the field origin.
         // Rotated it to to face forward, and raised it to sit on the ground correctly.
         // This can be used for generic target-centric approach algorithms
+
+        /*
         stoneTarget.setLocation(OpenGLMatrix
                 .translation(0, 0, stoneZ)
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
@@ -343,7 +345,7 @@ public class Vision extends Mechanism {
 
         rear2.setLocation(OpenGLMatrix
                 .translation(halfField, -quadField, mmTargetHeight)
-                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));
+                .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90)));*/
 
         //
         // Create a transformation matrix describing where the phone is on the robot.
@@ -406,7 +408,7 @@ public class Vision extends Mechanism {
 
         // Loading trackables is not necessary for the Tensor Flow Object Detection engine.
 
-        targetsSkyStone.activate();
+        //targetsSkyStone.activate();
     }
 
     public boolean getPosition(OpMode om){
@@ -462,7 +464,7 @@ public class Vision extends Mechanism {
         return pixel & 0xff;
     }
 
-    public int skysLocation(LinearOpMode om, boolean isRed){
+    public int ringLocation(LinearOpMode om, boolean isRed){
         int color = -1;
         if(!om.opModeIsActive()) {
             Image image;
@@ -481,26 +483,18 @@ public class Vision extends Mechanism {
                         Bitmap rgbImage = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.RGB_565);
                         rgbImage.copyPixelsFromBuffer(image.getPixels());
 
-                        int leftXStart = (int) ((double) rgbImage.getWidth() * 0.3);
-                        int leftXEnd = (int) ((double) rgbImage.getWidth() * 0.35);
-                        int rightXStart = (int) ((double) rgbImage.getWidth() * 0.5);
-                        int rightXEnd = (int) ((double) rgbImage.getWidth() * 0.8);
+                        int XStart = (int) ((double) rgbImage.getWidth() * 0);
+                        int XEnd = (int) ((double) rgbImage.getWidth() * 1);
 
-                        int leftYStart;
-                        int leftYEnd;
-                        int rightYStart;
-                        int rightYEnd;
+                        int YStart;
+                        int YEnd;
 
                         if (!isRed) {
-                            leftYStart = (int) ((double) rgbImage.getHeight() * 0.375);
-                            leftYEnd = (int) ((double) rgbImage.getHeight() * 0.5);
-                            rightYStart = (int) ((double) rgbImage.getHeight() * 0.75);
-                            rightYEnd = (int) ((double) rgbImage.getHeight() * 0.825);
+                            YStart = (int) ((double) rgbImage.getHeight() * 0);
+                            YEnd = (int) ((double) rgbImage.getHeight() * 1);
                         } else {
-                            leftYStart = (int) ((double) rgbImage.getHeight() * (0.375 - 0.15));
-                            leftYEnd = (int) ((double) rgbImage.getHeight() * (0.5 - 0.15));
-                            rightYStart = (int) ((double) rgbImage.getHeight() * (0.75 - 0.15));
-                            rightYEnd = (int) ((double) rgbImage.getHeight() * (0.825 - 0.15));
+                            YStart = (int) ((double) rgbImage.getHeight() * 0);
+                            YEnd = (int) ((double) rgbImage.getHeight() * 1);
                         }
 
                         int rightRedValue = 0;
@@ -510,26 +504,23 @@ public class Vision extends Mechanism {
                         int leftBlueValue = 0;
                         int leftGreenValue = 0;
 
-                        //for (int x = leftXStart; x < leftXEnd; x+= (leftXEnd-leftXStart)/8) {
+                        //for (int x = XStart; x < XEnd; x+= (XEnd-XStart)/8) {
                         for (int r = 0; r < 8; r++) {
                             //for (int y = yStart; y < yEnd; y+=(yEnd-yStart)/8) {
                             String colorString = "";
                             for (int c = 0; c < 8; c++) {
-                                int pixel = rgbImage.getPixel((leftXEnd - leftXStart) / 8 * r + leftXStart, (leftYEnd - leftYStart) / 8 * c + leftYStart);
+                                int pixel = rgbImage.getPixel((XEnd - XStart) / 8 * r + XStart, (YEnd - YStart) / 8 * c + YStart);
                                 leftRedValue += red(pixel);
                                 //color[r][c] = red(pixel);
-                                //colorString += red(pixel) + " ";
-                                pixel = rgbImage.getPixel((leftXEnd - leftXStart) / 8 * r + leftXStart, (rightYEnd - rightYStart) / 8 * c + rightYStart);
-                                rightRedValue += red(pixel);
-                                //color[r][c] = red(pixel);
-                                //colorString += red(pixel) + " ";
+                                colorString += red(pixel) + " ";
                             }
+                            om.telemetry.addData("" , colorString);
                         }
 
                         om.telemetry.addData("Total Left Red:", leftRedValue);
                         om.telemetry.addData("Total Right Red", rightRedValue);
 
-                        if (leftRedValue > rightRedValue) {
+                       /* if (leftRedValue > rightRedValue) {
                             if (leftRedValue / (rightRedValue + 1) > 2) {
                                 color = 1;
                             } else {
@@ -541,7 +532,8 @@ public class Vision extends Mechanism {
                             } else {
                                 color = 2;
                             }
-                        }
+                        }*/
+                        color = 0;
 
                         if (isRed) {
                             color = 2 - color;

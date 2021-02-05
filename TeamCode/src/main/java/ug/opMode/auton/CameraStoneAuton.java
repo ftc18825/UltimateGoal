@@ -65,6 +65,7 @@ public class CameraStoneAuton extends UGAuton {
         super();
         paramFileName = "CameraStoneParams";
         //hmp = new HashMap<String, Param>();
+        /*
         hmp.put("FastSpeed",new Param(0.7));
         setParamUpdateStep("FastSpeed",0.05);
         hmp.put("SlowSpeed",new Param(0.3));
@@ -109,7 +110,7 @@ public class CameraStoneAuton extends UGAuton {
         setParamUpdateStep("BackAfterFoundation", .05);
         hmp.put("ParkTiles", new Param(1.5));
         setParamUpdateStep("ParkTiles", .05);
-
+*/
     }
 
     @Override

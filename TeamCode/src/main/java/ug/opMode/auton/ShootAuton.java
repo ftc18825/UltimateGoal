@@ -30,10 +30,12 @@
 package ug.opMode.auton;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 
 /**
- * This file contains an minimal example of a Linear "OpMo++++++++++
+ * This file contains an minimal example of a Linear "OpMode". An OpMode is a 'program' that runs in either
+ * the autonomous or the teleop period of an FTC match. The names of OpModes appear on the menu
  * of the FTC Driver Station. When an selection is made from the menu, the corresponding OpMode
  * class is instantiated on the Robot Controller and executed.
  *
@@ -44,15 +46,23 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="ParkAutonFar", group="Stone")
-//@Disabled
-public class ParkAutonFar extends UGAuton {
-
+@Autonomous(name="IntakeAuton", group="Stone")
+@Disabled
+public class ShootAuton extends UGAuton {
     @Override
     public void runMe() {
-        sleep(20000);
-        forwardTiles(1.5,0.5);
-
-
+        forwardTiles(getPVal("TilesToShoot") , 0.25 );
+        rob.shooter.powerOn();
+        for(int i = 0 ; i < 3 ; i++){
+            rob.intake.in();
+            sleep(500);
+            rob.intake.stopPower();
+            rob.shooter.shoot();
+            sleep(250);
+            rob.shooter.retract();
+        }
+        if(!isWobble){
+            forwardTiles(getPVal("TilesToPark") - getPVal("TilesToShoot") , 0.25);
+        }
     }
 }

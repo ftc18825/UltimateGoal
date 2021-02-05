@@ -3,19 +3,20 @@ package ug.opMode.auton;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-@Autonomous(name="BlueTwoStoneAuton", group="Stone")
+@Autonomous(name="RedIntakeAuton", group="Stone")
 @Disabled
-public class BTwoStoneAuton extends StoneAuton {
+public class RShootAuton extends ShootAuton {
+
     @Override
     public void runOpMode(){
-        isRed = false;
+        isRed = true;
         super.runOpMode();
     }
 
     @Override
     public void runMe(){
-        isRed = false;
-        twoStone = true;
+        isRed = true;
+        isWobble = false;
         super.runMe();
     }
 }
