@@ -46,21 +46,29 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="IntakeAuton", group="Stone")
+@Autonomous(name="ShootAuton", group="Shoot")
 @Disabled
 public class ShootAuton extends UGAuton {
     @Override
     public void runMe() {
+        if(isWobble){
+            //rob.wobbleGrabber.out();
+            //sleep(500);
+            rob.wobbleGrabber.grab();
+            sleep(250);
+        }
         forwardTiles(getPVal("TilesToShoot") , 0.25 );
         rob.shooter.powerOn();
-        for(int i = 0 ; i < 3 ; i++){
-            rob.intake.in();
+        rob.intake.in();
+        sleep(1000);
+        for(int i = 0 ; i < 6 ; i++){
             sleep(500);
-            rob.intake.stopPower();
             rob.shooter.shoot();
-            sleep(250);
+            sleep(750);
             rob.shooter.retract();
         }
+        rob.intake.stopPower();
+        rob.shooter.powerOff();
         if(!isWobble){
             forwardTiles(getPVal("TilesToPark") - getPVal("TilesToShoot") , 0.25);
         }

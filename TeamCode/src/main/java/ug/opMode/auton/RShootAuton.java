@@ -3,8 +3,8 @@ package ug.opMode.auton;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
-@Autonomous(name="RedIntakeAuton", group="Stone")
-@Disabled
+@Autonomous(name="RedShootAuton", group="Shoot")
+//@Disabled
 public class RShootAuton extends ShootAuton {
 
     @Override

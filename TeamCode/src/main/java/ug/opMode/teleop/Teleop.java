@@ -150,6 +150,18 @@ public class Teleop extends OpMode {
             rob.gyro.resetHeadingBackward();
         }
 
+        if(gamepad1.y){
+            rob.wobbleGrabber.up();
+        }else if(gamepad1.a){
+            rob.wobbleGrabber.out();
+        }
+
+        if(gamepad1.b){
+            rob.wobbleGrabber.release();
+        }else if(gamepad1.x){
+            rob.wobbleGrabber.grab();
+        }
+
         /*
         if(Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 0.2){
             rob.driveTrain.turnToDegrees(Math.atan2(-gamepad1.left_stick_y,gamepad1.left_stick_x)*180/Math.PI,rob.gyro,this,0.6);
@@ -187,6 +199,8 @@ public class Teleop extends OpMode {
             rob.placer.lift.hold();
         }*/
 
+        /*
+
         if(gamepad1.y){
             if(!yPressed) {
                 rob.driveTrain.changeFrontRight();
@@ -223,7 +237,7 @@ public class Teleop extends OpMode {
             xPressed = false;
         }
 
-
+        */
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Heading: ", rob.gyro.getHeading());

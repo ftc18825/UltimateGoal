@@ -121,6 +121,8 @@ public class BasicAuton extends LinearOpMode {
 
             if(editing){
                 paramManager.respondToGamePadAndTelemetry(gamepad1, hmp,this);
+            }else{
+                rob.vision.updateVariables(this , gamepad1);
             }
             telemetry.update();
             sleep(10);

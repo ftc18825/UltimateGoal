@@ -69,7 +69,7 @@ public class Shooter extends Mechanism {
     public void powerOn() {
         isPowered = true;
         //shooter.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shooter.setPower(getPVal("Speed")*1);
+        shooter.setPower(1);
     }
 
     public void powerOff() {

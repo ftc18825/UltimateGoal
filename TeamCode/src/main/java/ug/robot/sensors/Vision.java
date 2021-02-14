@@ -33,6 +33,7 @@ import android.graphics.Bitmap;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.vuforia.Image;
 import com.vuforia.PIXEL_FORMAT;
@@ -119,6 +120,17 @@ public class Vision extends Mechanism {
     private float phoneYRotate    = 0;
     private float phoneZRotate    = 0;
 
+    public double XStartPercent = 0.15;
+    public double XEndPercent = 0.35;
+    public double YStartPercent = 0;
+    public double YEndPercent = .5;
+    public int editVal = 0;
+    public boolean upPressed = false;
+    public boolean downPressed = false;
+    public boolean leftPressed = false;
+    public boolean rightPressed = false;
+    public String [] editing = new String [] {"XStart" , "XEnd" , "YStart" , "YEnd"};
+
     //VuforiaTrackables targetsSkyStone = null;
     List<VuforiaTrackable> allTrackables = null;
 
@@ -146,6 +158,8 @@ public class Vision extends Mechanism {
             initVuforia();
 
         }
+
+
     }
 
     public void start(){
@@ -464,6 +478,77 @@ public class Vision extends Mechanism {
         return pixel & 0xff;
     }
 
+    public static double saturation(double red , double green , double blue , double totalMax){
+        double min = red;
+        double max = red;
+
+        if(green < min){
+            min = green;
+        }else{
+            max = green;
+        }
+
+        if(blue < min){
+            min = blue;
+        }
+        if(blue > max){
+            max = blue;
+        }
+
+        double lumin = (max + min)/(2*totalMax);
+
+        if(lumin == 1){
+            return 0;
+        }else{
+            return ((max - min)/totalMax)/(1-Math.abs(2*lumin - 1));
+        }
+
+    }
+
+    public void updateVariables(LinearOpMode om , Gamepad g){
+        if(g.dpad_up && !upPressed){
+            if(editVal%4 == 0){
+                XStartPercent += 0.01;
+            }else if(editVal%4 == 1){
+                XEndPercent += 0.01;
+            }else if(editVal%4 == 2){
+                YStartPercent += 0.01;
+            }else{
+                YEndPercent += 0.01;
+            }
+        }
+        upPressed = g.dpad_up;
+
+        if(g.dpad_down && !downPressed){
+            if(editVal%4 == 0){
+                XStartPercent -= 0.01;
+            }else if(editVal%4 == 1){
+                XEndPercent -= 0.01;
+            }else if(editVal%4 == 2){
+                YStartPercent -= 0.01;
+            }else{
+                YEndPercent -= 0.01;
+            }
+        }
+        downPressed = g.dpad_down;
+
+        if(g.dpad_left && !leftPressed){
+            editVal -= 1;
+        }
+        leftPressed = g.dpad_left;
+
+        if(g.dpad_right && !rightPressed){
+            editVal += 1;
+        }
+        rightPressed = g.dpad_right;
+
+        om.telemetry.addData("Editing: " , editing[editVal%editing.length]);
+        om.telemetry.addData("XStart" , XStartPercent);
+        om.telemetry.addData("XEnd" , XEndPercent);
+        om.telemetry.addData("YStart" , YStartPercent);
+        om.telemetry.addData("YEnd" , YEndPercent);
+    }
+
     public int ringLocation(LinearOpMode om, boolean isRed){
         int color = -1;
         if(!om.opModeIsActive()) {
@@ -483,18 +568,18 @@ public class Vision extends Mechanism {
                         Bitmap rgbImage = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.RGB_565);
                         rgbImage.copyPixelsFromBuffer(image.getPixels());
 
-                        int XStart = (int) ((double) rgbImage.getWidth() * 0);
-                        int XEnd = (int) ((double) rgbImage.getWidth() * 1);
+                        int XStart = (int) ((double) rgbImage.getWidth() * XStartPercent);
+                        int XEnd = (int) ((double) rgbImage.getWidth() * XEndPercent);
 
                         int YStart;
                         int YEnd;
 
                         if (!isRed) {
-                            YStart = (int) ((double) rgbImage.getHeight() * 0);
-                            YEnd = (int) ((double) rgbImage.getHeight() * 1);
+                            YStart = (int) ((double) rgbImage.getHeight() * YStartPercent);
+                            YEnd = (int) ((double) rgbImage.getHeight() * YEndPercent);
                         } else {
-                            YStart = (int) ((double) rgbImage.getHeight() * 0);
-                            YEnd = (int) ((double) rgbImage.getHeight() * 1);
+                            YStart = (int) ((double) rgbImage.getHeight() * YStartPercent);
+                            YEnd = (int) ((double) rgbImage.getHeight() * YEndPercent);
                         }
 
                         int rightRedValue = 0;
@@ -510,15 +595,55 @@ public class Vision extends Mechanism {
                             String colorString = "";
                             for (int c = 0; c < 8; c++) {
                                 int pixel = rgbImage.getPixel((XEnd - XStart) / 8 * r + XStart, (YEnd - YStart) / 8 * c + YStart);
+                                leftGreenValue += green(pixel);
+                                leftBlueValue += blue(pixel);
                                 leftRedValue += red(pixel);
                                 //color[r][c] = red(pixel);
-                                colorString += red(pixel) + " ";
+                                colorString += green(pixel) + " ";
                             }
                             om.telemetry.addData("" , colorString);
                         }
 
-                        om.telemetry.addData("Total Left Red:", leftRedValue);
-                        om.telemetry.addData("Total Right Red", rightRedValue);
+                        /*
+
+                        double min = leftRedValue;
+                        double max = leftRedValue;
+
+                        if(leftGreenValue < min){
+                            min = leftGreenValue;
+                        }else{
+                            max = leftGreenValue;
+                        }
+
+                        if(leftBlueValue < min){
+                            min = leftBlueValue;
+                        }
+                        if(leftBlueValue > max){
+                            max = leftBlueValue;
+                        }
+
+                        double lumin = (max + min)/(2*8*8*255);
+
+                         */
+
+                        double sat = saturation(leftRedValue , leftGreenValue , leftBlueValue , 8*8*255);
+                        if(sat > 0.15){
+                            color = 2;
+                        }else if(sat > 0.03){
+                            color = 1;
+                        }else{
+                            color = 0;
+                        }
+
+
+                        //om.telemetry.addData("Total Green:", leftGreenValue);
+                        om.telemetry.addData("Saturation: " , sat);
+                        //om.telemetry.addData("min: " , min);
+                        //om.telemetry.addData("max: " , max);
+                        //om.telemetry.addData("Lumin: " , lumin);
+                        //om.telemetry.addData("Top: " , (max - min)/(8*8*255));
+                        //om.telemetry.addData("Bottom: " , (1-Math.abs(2*lumin - 1)));
+                        //om.telemetry.addData("Total Right Red", rightRedValue);
 
                        /* if (leftRedValue > rightRedValue) {
                             if (leftRedValue / (rightRedValue + 1) > 2) {
@@ -533,11 +658,6 @@ public class Vision extends Mechanism {
                                 color = 2;
                             }
                         }*/
-                        color = 0;
-
-                        if (isRed) {
-                            color = 2 - color;
-                        }
 
                     /*if(rightBlueValue > leftBlueValue){
                         color = 1;

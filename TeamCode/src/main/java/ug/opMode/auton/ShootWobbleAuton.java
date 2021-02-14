@@ -64,28 +64,47 @@ public class ShootWobbleAuton extends ShootAuton {
 
         sleep(250);
 
+        /*
+
         double startTime = runtime.milliseconds();
         while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
             rob.driveTrain.turnToDegrees(getPVal("DegreesToWobble"),rob.gyro,this,0.25);
         }
         sleep(250);
 
-        if(color == 0 || color == 2){
+         */
+
+        if(color == 1){
             if(isRed){
-                forwardTiles(getPVal("TilesToWallRed") , 0.25);
+                leftTiles(getPVal("TilesToWallRed") , 0.25);
+                rob.wobbleGrabber.down();
+                sleep(500);
+                rob.wobbleGrabber.release();
                 sleep(250);
-                //Drop Wobble
+                rob.wobbleGrabber.up();
                 sleep(250);
-                backTiles(getPVal("TilesToWallRed") , 0.25);
+                //rightTiles(getPVal("TilesToWallRed") , 0.25);
             }else{
-                backTiles(getPVal("TilesToWallBlue") , 0.25);
+                rightTiles(getPVal("TilesToWallBlue") , 0.25);
+                rob.wobbleGrabber.down();
+                sleep(500);
+                rob.wobbleGrabber.release();
                 sleep(250);
-                //Drop Wobble
+                rob.wobbleGrabber.up();
                 sleep(250);
-                forwardTiles(getPVal("TilesToWallBlue") , 0.25);
+                //leftTiles(getPVal("TilesToWallBlue") , 0.25);
             }
+        }else{
+            rob.wobbleGrabber.down();
+            sleep(500);
+            rob.wobbleGrabber.release();
+            sleep(250);
+            rob.wobbleGrabber.up();
+            sleep(250);
         }
         sleep(250);
+
+        /*
 
         startTime = runtime.milliseconds();
         while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
@@ -93,12 +112,14 @@ public class ShootWobbleAuton extends ShootAuton {
         }
         sleep(250);
 
+         */
+
         if(color == 0){
-            backTiles(getPVal("TilesToA") + getPVal("TilestoShoot") - getPVal("TilesToPark") , 0.25);
+            backTiles(getPVal("TilesToA") + getPVal("TilesToShoot") - getPVal("TilesToPark") , 0.25);
         }else if(color == 1){
-            backTiles(getPVal("TilesToB") + getPVal("TilestoShoot") - getPVal("TilesToPark") , 0.25);
+            backTiles(getPVal("TilesToB") + getPVal("TilesToShoot") - getPVal("TilesToPark") , 0.25);
         }else{
-            backTiles(getPVal("TilesToC") + getPVal("TilestoShoot") - getPVal("TilesToPark") , 0.25);
+            backTiles(getPVal("TilesToC") + getPVal("TilesToShoot") - getPVal("TilesToPark") , 0.25);
         }
 
     }

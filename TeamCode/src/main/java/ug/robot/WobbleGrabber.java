@@ -6,9 +6,14 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class WobbleGrabber extends Mechanism{
 
     public Servo wobbleGrabber;
+    public Servo wobbleRotator;
 
-    double wobbleUp;
-    double wobbleDown;
+    double wobbleGrabPos;
+    double wobbleReleasePos;
+
+    double rotateDownPos;
+    double rotateOutPos;
+    double rotateUpPos;
 
     public double wobblePos;
 
@@ -19,7 +24,7 @@ public class WobbleGrabber extends Mechanism{
         super(n,hardwareMap);
 
         wobbleGrabber = getHwServo("wobbleGrabber");
-
+        wobbleRotator = getHwServo("wobbleRotator");
     }
 
     public void start(){
@@ -31,22 +36,48 @@ public class WobbleGrabber extends Mechanism{
     }
 
     public void init(){
-        wobbleUp = 0;
-        wobbleDown = 0;
+        wobbleGrabPos = 0.367;
+        wobbleReleasePos = 0.666;
+
+        rotateDownPos = 0.777;
+        rotateOutPos = 0.49;
+        rotateUpPos = 0;
+
         wobblePos = 0;
 
         editing = 0;
         updateVal = 0.002;
 
-        wobbleGrabber.setPosition(wobbleUp);
+        up();
+        grab();
+    }
+
+    public void grab(){
+        wobbleGrabber.setPosition(wobbleGrabPos);
+    }
+
+    public void release(){
+        wobbleGrabber.setPosition(wobbleReleasePos);
+    }
+
+    public void up(){
+        wobbleRotator.setPosition(rotateUpPos);
+    }
+
+    public void down(){
+        wobbleRotator.setPosition(rotateDownPos);
+    }
+
+    public void out(){
+        wobbleRotator.setPosition(rotateOutPos);
     }
 
     public void allDown(){
-        wobbleGrabber.setPosition(wobbleDown);
+        wobbleGrabber.setPosition(wobbleReleasePos);
     }
 
     public void allUp(){
-        wobbleGrabber.setPosition(wobbleUp);
+        wobbleGrabber.setPosition(wobbleGrabPos);
     }
 
     public void testDown(){
