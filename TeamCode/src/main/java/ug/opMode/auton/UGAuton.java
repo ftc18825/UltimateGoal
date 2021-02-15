@@ -83,6 +83,10 @@ public class UGAuton extends BasicAuton {
         setParamUpdateStep("TilesToWallRed" , 0.05);
         hmp.put("TilesToWallBlue" , new Param(1));
         setParamUpdateStep("TilesToWallBlue" , 0.05);
+        hmp.put("StrafeShootRed" , new Param(.5));
+        setParamUpdateStep("TilesToWallBlue" , .1);
+        hmp.put("StrafeShootBackRed" , new Param(0));
+        setParamUpdateStep("TilesToWallBlue" , .1);
 
     }
 

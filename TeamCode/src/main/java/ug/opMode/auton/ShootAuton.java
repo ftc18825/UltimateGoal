@@ -51,6 +51,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 public class ShootAuton extends UGAuton {
     @Override
     public void runMe() {
+        telemetry.addData("Gyro:" , rob.gyro.getHeading());
+        telemetry.update();
         if(isWobble){
             //rob.wobbleGrabber.out();
             //sleep(500);
@@ -58,6 +60,21 @@ public class ShootAuton extends UGAuton {
             sleep(250);
         }
         forwardTiles(getPVal("TilesToShoot") , 0.25 );
+        sleep(250);
+
+        leftTiles(getPVal("StrafeShootRed") , 0.25);
+
+        /*
+        double startTime = runtime.milliseconds();
+        while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
+            rob.driveTrain.turnToDegrees(getPVal("ShootDegreesRed"),rob.gyro,this,0.25);
+            telemetry.addData("Gyro:" , rob.gyro.getHeading());
+            telemetry.update();
+        }
+        rob.stop();
+
+         */
+
         rob.shooter.powerOn();
         rob.intake.in();
         sleep(1000);
@@ -69,6 +86,21 @@ public class ShootAuton extends UGAuton {
         }
         rob.intake.stopPower();
         rob.shooter.powerOff();
+
+        rightTiles(getPVal("StrafeShootBackRed") , 0.25);
+
+        /*
+        startTime = runtime.milliseconds();
+        while(opModeIsActive() && runtime.milliseconds()-startTime < 1500){
+            rob.driveTrain.turnToDegrees(0,rob.gyro,this,0.25);
+            telemetry.addData("Gyro:" , rob.gyro.getHeading());
+            telemetry.update();
+        }
+        rob.stop();
+        sleep(250);
+
+         */
+
         if(!isWobble){
             forwardTiles(getPVal("TilesToPark") - getPVal("TilesToShoot") , 0.25);
         }

@@ -61,6 +61,7 @@ public class Teleop extends OpMode {
     boolean aPressed;
     boolean bPressed;
     boolean xPressed;
+    boolean leftBumperPressed;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -80,6 +81,7 @@ public class Teleop extends OpMode {
         aPressed = false;
         bPressed = false;
         xPressed = false;
+        leftBumperPressed = false;
     }
 
     /*
@@ -110,7 +112,7 @@ public class Teleop extends OpMode {
         if (gamepad1.right_stick_button && !rightStickPressed) {
             if (driveSpeed > 0.9)
                 driveSpeed = 0.5;
-            if (driveSpeed < 0.6)
+            else if (driveSpeed < 0.6)
                 driveSpeed = 1.0;
         }
         rightStickPressed = gamepad1.right_stick_button;
@@ -123,11 +125,14 @@ public class Teleop extends OpMode {
             rob.intake.stopPower();
         }
 
-        if(gamepad1.left_bumper){
-            rob.shooter.powerOn();
-        }else{
-            rob.shooter.powerOff();
+        if(gamepad1.left_bumper && !leftBumperPressed){
+            if(rob.shooter.isPowered){
+                rob.shooter.powerOff();
+            }else{
+                rob.shooter.powerOn();
+            }
         }
+        leftBumperPressed = gamepad1.left_bumper;
 
         if(gamepad1.left_trigger > 0.3){
             rob.shooter.shoot();

@@ -81,6 +81,7 @@ public class ShootWobbleAuton extends ShootAuton {
                 sleep(500);
                 rob.wobbleGrabber.release();
                 sleep(250);
+                leftTiles(0.25 , 0.25);
                 rob.wobbleGrabber.up();
                 sleep(250);
                 //rightTiles(getPVal("TilesToWallRed") , 0.25);
@@ -90,6 +91,7 @@ public class ShootWobbleAuton extends ShootAuton {
                 sleep(500);
                 rob.wobbleGrabber.release();
                 sleep(250);
+                leftTiles(0.25 , 0.25);
                 rob.wobbleGrabber.up();
                 sleep(250);
                 //leftTiles(getPVal("TilesToWallBlue") , 0.25);
@@ -99,6 +101,7 @@ public class ShootWobbleAuton extends ShootAuton {
             sleep(500);
             rob.wobbleGrabber.release();
             sleep(250);
+            leftTiles(0.25 , 0.25);
             rob.wobbleGrabber.up();
             sleep(250);
         }

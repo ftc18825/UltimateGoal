@@ -16,7 +16,7 @@ public class Shooter extends Mechanism {
     //boolean encMode = false;
     int upPosEnc;
     private ElapsedTime runtime = new ElapsedTime();
-    boolean isPowered;
+    public boolean isPowered;
     int lastMotorPos;
     int zeroMotorPos;
     int topMotorPos;
